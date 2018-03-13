@@ -16,7 +16,12 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class BasePage {
+
+/**
+ * Parent page holds the common attributes and functions related to page object and web dricer
+ *
+ */
+public abstract class BasePage {
 
     protected WebDriver driver;
     Logger logger = LogManager.getLogger(BasePage.class);
@@ -24,6 +29,9 @@ public class BasePage {
         this.driver = driver;
     }
 
+    /**
+     * For simplicity added Expected Condition wait based on the element display visibility.
+     */
     public WebElement find(By locator) {
         WebDriverWait wait = new WebDriverWait(driver,ConfigEnum.INSTANCE.getDriverTimeOutInSeconds());
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));

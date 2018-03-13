@@ -29,7 +29,7 @@ import vehicleenquiry.config.ConfigEnum;
 
 /**
  * 
- * Filter the files form the given directory and the supported exten files 
+ * Filter the configured  exten  files form the given directory 
  *
  */
 public class VehicleFileFilter {
@@ -61,6 +61,7 @@ public class VehicleFileFilter {
 							.contains(FilenameUtils.getExtension(p.getFileName().toString())))
 					.collect(Collectors.toList());
 			collect.forEach(p -> {
+				logger.info(()-> p.getFileName());
 				vehicleList.add(mapVehicleMetaData.apply(p));
 			});
 		} catch (IOException e) {
@@ -70,7 +71,7 @@ public class VehicleFileFilter {
 		return vehicleList;
 	}
 	/**
-	 * Filter the  given file
+	 * Filter the  given file from the folder path.
 	 * @return File
 	 */
 	public File filter(String filename) {
@@ -85,6 +86,10 @@ public class VehicleFileFilter {
 		return file;
 	}
 
+
+	/**
+	 * function mapping to extract the meta data from the files 
+	 */
 	public Function<Path, VehicleFileMetaData> mapVehicleMetaData = new Function<Path, VehicleFileMetaData>() {
 
 		public VehicleFileMetaData apply(Path path) {
@@ -100,9 +105,11 @@ public class VehicleFileFilter {
 
 
 	/**
-	 * Used tick framewok to get the right mime type based on content.
+	 * Used tick framework to get the right mime type based on content. 
+	 * Other methods are not accurate , it would  work based file name extension
+	 * 
 	 * @param file
-	 * @return
+	 * @return content mime type
 	 */
 	public String getMIMEType(File file) {
 		FileInputStream is;
@@ -116,7 +123,7 @@ public class VehicleFileFilter {
 			// OOXMLParser parser = new OOXMLParser();
 			parser.parse(is, contenthandler, metadata);
 			MIMEType = metadata.get(Metadata.CONTENT_TYPE);
-			logger.debug(file.getName()+MIMEType);
+			logger.info(file.getName()+MIMEType);
 		} catch (IOException | SAXException | TikaException e) {
 			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e);

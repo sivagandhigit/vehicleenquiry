@@ -30,6 +30,7 @@ public class CSVVehicleEnquiryParser implements VehicleEnquiryFileParser {
 		List<VehicleDetails> vhdetails = new ArrayList<VehicleDetails>();
 		VehicleFileFilter fileFilter = new VehicleFileFilter(ConfigEnum.INSTANCE.getTestDataFolder());
 		File file = fileFilter.filter(vMetaData.getFileName());
+		logger.debug(file.getName());
 		Reader reader;
 		try {
 			reader = Files.newBufferedReader(file.toPath());

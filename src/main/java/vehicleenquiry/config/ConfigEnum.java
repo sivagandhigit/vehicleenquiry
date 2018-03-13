@@ -29,11 +29,11 @@ public enum ConfigEnum {
 			screenShotFolder = prop.getProperty("ScreenShotFolder");
 			logger.debug(() -> screenShotFolder);
 			testDataFolder = prop.getProperty("TestDataFolder");
-			logger.debug(() -> testDataFolder);
+			logger.info(() -> testDataFolder);
 			homePageURL = prop.getProperty("HomePageURL");
 			logger.debug(() -> homePageURL);
 			supportedFileTypes = prop.getProperty("SupportedFileTypes");
-			logger.debug(() -> supportedFileTypes);
+			logger.info(() -> supportedFileTypes);
 			driverTimeOutInSeconds = Long.parseLong(prop.getProperty("DriverTimeOutInSeconds"));
 			logger.debug(() -> driverTimeOutInSeconds);
 		} catch (IOException e) {

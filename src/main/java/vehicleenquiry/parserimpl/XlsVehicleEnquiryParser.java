@@ -32,6 +32,7 @@ public class XlsVehicleEnquiryParser implements VehicleEnquiryFileParser {
 		List<VehicleDetails> vhdetails = new ArrayList<VehicleDetails>();
 		VehicleFileFilter fileFilter = new VehicleFileFilter(ConfigEnum.INSTANCE.getTestDataFolder());
 		File file = fileFilter.filter(vMetaData.getFileName());
+		logger.debug(file.getName());
 		try {
 			Workbook workbook = WorkbookFactory.create(file);
 			Iterator<Sheet> sheetIterator = workbook.sheetIterator();

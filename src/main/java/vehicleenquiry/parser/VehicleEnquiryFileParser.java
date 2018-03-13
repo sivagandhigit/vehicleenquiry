@@ -11,15 +11,17 @@ import vehicleenquiry.file.VehicleFileMetaData;
  */
 public interface VehicleEnquiryFileParser {
 	/**
-	 *  Parse the meta data and walk through the dir and fix the appropriate files. 
-	 * each row in ht eretrived files are mapped to VehicleDetails
+	 *  1. Walk through the configured dir and pickup the appropriate file based on meta data. 
+	 *  2. Pickup the right parser based on file meta data 
+	 *  3. Parse the file and  for each row map VehicleDetails
+	 *  
 	 * @param vMetaData
 	 * @return List<VehicleDetails>
 	 */
 	public List<VehicleDetails> parse(VehicleFileMetaData vMetaData);
 	
 	/**
-	 * Method used the determine which parser to be used VehicleFileMetaData
+	 * Method used the filter the right parser based on VehicleFileMetaData
 	 * @param vMetaData
 	 * 
 	 * @return
