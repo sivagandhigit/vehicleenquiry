@@ -15,6 +15,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -25,7 +27,13 @@ import org.xml.sax.SAXException;
 
 import vehicleenquiry.config.ConfigEnum;
 
+/**
+ * 
+ * Filter the files form the given directory and the supported exten files 
+ *
+ */
 public class VehicleFileFilter {
+	Logger logger = LogManager.getLogger(VehicleFileFilter.class);
 	String dirPath;
 	String[] supportedExtensions;
 	Path folder;
@@ -40,6 +48,11 @@ public class VehicleFileFilter {
 		supportedExtensions = ConfigEnum.INSTANCE.getSupportedFileTypes().split(",");
 	}
 
+	
+	/**
+	 * Filter the files form given directory and extracts required meta data 
+	 * @return List<VehicleFileMetaData>
+	 */
 	public List<VehicleFileMetaData> filter() {
 		List<VehicleFileMetaData> vehicleList = new ArrayList<VehicleFileMetaData>();
 		try {
@@ -51,22 +64,27 @@ public class VehicleFileFilter {
 				vehicleList.add(mapVehicleMetaData.apply(p));
 			});
 		} catch (IOException e) {
-
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
 		return vehicleList;
 	}
-
+	/**
+	 * Filter the  given file
+	 * @return File
+	 */
 	public File filter(String filename) {
 		File file = null;
 		try {
 			file = Files.walk(folder).filter(p -> filename.equals(p.getFileName().toString())).findFirst().get()
 					.toFile();
 		} catch (IOException e) {
-
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
 		return file;
 	}
-	
+
 	public Function<Path, VehicleFileMetaData> mapVehicleMetaData = new Function<Path, VehicleFileMetaData>() {
 
 		public VehicleFileMetaData apply(Path path) {
@@ -80,6 +98,12 @@ public class VehicleFileFilter {
 		}
 	};
 
+
+	/**
+	 * Used tick framewok to get the right mime type based on content.
+	 * @param file
+	 * @return
+	 */
 	public String getMIMEType(File file) {
 		FileInputStream is;
 		String MIMEType = null;
@@ -92,8 +116,10 @@ public class VehicleFileFilter {
 			// OOXMLParser parser = new OOXMLParser();
 			parser.parse(is, contenthandler, metadata);
 			MIMEType = metadata.get(Metadata.CONTENT_TYPE);
+			logger.debug(file.getName()+MIMEType);
 		} catch (IOException | SAXException | TikaException e) {
-
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
 		}
 		return MIMEType;
 	}

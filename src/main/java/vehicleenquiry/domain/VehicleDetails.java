@@ -3,7 +3,7 @@ package vehicleenquiry.domain;
 public class VehicleDetails {
 	String vrn;
 	String model;
-	String color;
+	String colour;
 
 	public String getVrn() {
 		return vrn;
@@ -21,12 +21,12 @@ public class VehicleDetails {
 		this.model = model;
 	}
 
-	public String getColor() {
-		return color;
+	public String getColour() {
+		return colour;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 
 }

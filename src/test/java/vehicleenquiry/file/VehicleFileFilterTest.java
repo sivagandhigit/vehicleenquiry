@@ -21,17 +21,16 @@ public class VehicleFileFilterTest {
 	@Test
 	public void evaluatesFilterFileName() {
 		VehicleFileFilter fileFilter = new VehicleFileFilter("./testdata");
-		File file = fileFilter.filter("Exisit_vehicle_enquiry_Excel.xls");
-		assertEquals("File is not in folder ", "Exisit_vehicle_enquiry_Excel.xls", file.getName());
+		File file = fileFilter.filter("VRNExcel_1.xls");
+		assertEquals("File is not in folder ", "VRNExcel_1.xls", file.getName());
 	}
 
 	@Test
 	public void evaluatesFileMetaDataXls() {
 		VehicleFileFilter fileFilter = new VehicleFileFilter("./testdata");
-		File file = fileFilter.filter("Exisit_vehicle_enquiry_Excel.xls");
+		File file = fileFilter.filter("VRNExcel_1.xls");
 		VehicleFileMetaData metadata = fileFilter.mapVehicleMetaData.apply(file.toPath());
-		System.out.println(metadata.getMIMEType());
-		assertEquals("Unexpected  Mime Type ", "application/msword", metadata.getMIMEType());
+		assertEquals("Unexpected  Mime Type ", "application/vnd.ms-excel", metadata.getMIMEType());
 		assertEquals("Unexpected  Extension ", "xls", metadata.getExtension());
 		assertTrue("Unexpected  size ", metadata.getFileSize() > 0);
 	}
@@ -39,7 +38,7 @@ public class VehicleFileFilterTest {
 	@Test
 	public void evaluatesFileMetaDataCsv() {
 		VehicleFileFilter fileFilter = new VehicleFileFilter("./testdata");
-		File file = fileFilter.filter("Exisit_vehicle_enquiry.csv");
+		File file = fileFilter.filter("Exisit_vehicle_enquiry_csv.csv");
 		VehicleFileMetaData metadata = fileFilter.mapVehicleMetaData.apply(file.toPath());
 		assertEquals("Unexpected  Mime Type ", "text/csv", metadata.getMIMEType());
 		assertEquals("Unexpected  Extension ", "csv", metadata.getExtension());

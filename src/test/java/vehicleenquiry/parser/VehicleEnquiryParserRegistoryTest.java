@@ -17,7 +17,7 @@ public class VehicleEnquiryParserRegistoryTest {
 	@Test
 	public void evaluateNullGetVehicleFileParser() {
 		VehicleFileMetaData vMetaData = new VehicleFileMetaData();
-		assertNull(VehicleEnquiryParserRegistory.getVehicleFileParser(vMetaData));
+		assertNull(VehicleEnquiryParserRegistry.getVehicleFileParser(vMetaData));
 	}
 
 	@Test
@@ -25,9 +25,9 @@ public class VehicleEnquiryParserRegistoryTest {
 		VehicleFileMetaData vMetaData = new VehicleFileMetaData();
 		vMetaData.setMIMEType(SupportedMIMEType.TXTCSV.getMIMETypeText());
 		vMetaData.setExtention(SupportedFileExten.CSV.toString());
-		assertNotNull(VehicleEnquiryParserRegistory.getVehicleFileParser(vMetaData));
+		assertNotNull(VehicleEnquiryParserRegistry.getVehicleFileParser(vMetaData));
 		assertEquals("Wrong Parser", CSVVehicleEnquiryParser.class,
-				VehicleEnquiryParserRegistory.getVehicleFileParser(vMetaData).getClass());
+				VehicleEnquiryParserRegistry.getVehicleFileParser(vMetaData).getClass());
 	}
 	
 	@Test
@@ -35,8 +35,8 @@ public class VehicleEnquiryParserRegistoryTest {
 		VehicleFileMetaData vMetaData = new VehicleFileMetaData();
 		vMetaData.setMIMEType(SupportedMIMEType.APPXLS.getMIMETypeText());
 		vMetaData.setExtention(SupportedFileExten.XLS.toString());
-		assertNotNull(VehicleEnquiryParserRegistory.getVehicleFileParser(vMetaData));
+		assertNotNull(VehicleEnquiryParserRegistry.getVehicleFileParser(vMetaData));
 		assertEquals("Wrong Parser", XlsVehicleEnquiryParser.class,
-				VehicleEnquiryParserRegistory.getVehicleFileParser(vMetaData).getClass());
+				VehicleEnquiryParserRegistry.getVehicleFileParser(vMetaData).getClass());
 	}	
 }
